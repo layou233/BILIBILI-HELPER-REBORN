@@ -1,6 +1,7 @@
 package check
 
 import (
+	"BILIBILI-HELPER-REBORN/task/exp"
 	"BILIBILI-HELPER-REBORN/utils"
 	"github.com/spf13/cobra"
 	"log"
@@ -47,12 +48,7 @@ func run(cmd *cobra.Command, args []string) {
 		log.Panic("error when requesting user info:", err)
 		return
 	}
-	reward, err := client.GetExpRewardStat()
-	if err != nil {
-		log.Panic("error when requesting user info:", err)
-		return
-	}
-	reward.Coins, err = client.GetExpCoinReward()
+	reward, err := exp.GetDailyStatus(client)
 	if err != nil {
 		log.Panic("error when requesting user info:", err)
 		return
@@ -71,11 +67,5 @@ func run(cmd *cobra.Command, args []string) {
 ================`, client.Me.UName, userInfo.Coins, reward.Coins,
 		utils.GetVIPStat(vipStat).String())
 
-	log.Println(`
-=====每日任务完成情况=====
-| { true 为 已完成, false 为 未完成 }
-| 每日登录:`, reward.Login, `
-| 每日观看视频:`, reward.Watch, `
-| 每日分享:`, reward.Share, `
-=======================`)
+	exp.PrintDailyStatus(reward)
 }

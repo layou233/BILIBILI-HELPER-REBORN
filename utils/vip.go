@@ -14,21 +14,21 @@ type vip struct {
 
 func (v vip) String() string {
 	if v.Type == "" {
-		return "未开通"
+		return "未开通, 过期时间: " + v.Due.String()
 	}
 	return fmt.Sprintf("%s, 到期时间: %s, 状态:%s", v.Type, v.Due.String(), v.Status)
 }
 
 func GetVIPStat(stat *biligo.VipStat) (v vip) {
 	v = vip{
-		Due: time.UnixMilli(stat.VipDueDate),
+		Due: GetCST8Time(time.UnixMilli(stat.VipDueDate)),
 	}
 	if stat.VipDueDate < time.Now().UnixMilli() {
 		v.Status = "已过期"
 		return
 	}
 	switch stat.VipType {
-	case 0:
+	case 0: // 未开通
 		return
 	case 1:
 		v.Type = "月度大会员"
