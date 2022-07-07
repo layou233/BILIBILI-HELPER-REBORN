@@ -73,6 +73,7 @@ func run(cmd *cobra.Command, args []string) {
 
 	retriedTimes := 0
 watch:
+	utils.WaitRandom()
 	log.Println("=====每日视频观看开始=====")
 	videoInfo, playedTime, err := videos.DoVideoWatch(client)
 	if err != nil {
@@ -90,8 +91,9 @@ watch:
 		log.Println("=====每日视频观看结束=====\n")
 	}
 
-share:
 	retriedTimes = 0
+share:
+	utils.WaitRandom()
 	log.Println("=====每日视频分享开始=====")
 	err = videos.DoVideoShare(client)
 	if err != nil {
