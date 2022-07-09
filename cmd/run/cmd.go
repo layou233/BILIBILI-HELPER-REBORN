@@ -109,4 +109,11 @@ share:
 		log.Println("分享成功!")
 		log.Println("=====每日视频分享结束=====\n")
 	}
+
+	reward, err = exp.GetDailyStatus(client)
+	if err != nil {
+		log.Panic("error when requesting user info:", err)
+		return
+	}
+	exp.PrintDailyStatus(reward)
 }
