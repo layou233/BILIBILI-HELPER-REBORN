@@ -110,6 +110,7 @@ share:
 		log.Println("=====每日视频分享结束=====\n")
 	}
 
+	utils.WaitRandom()
 	reward, err = exp.GetDailyStatus(client)
 	if err != nil {
 		log.Panic("error when requesting user info:", err)

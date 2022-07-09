@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 env:
+  TZ: Asia/Shanghai
   GOAMD64: v3
   
 jobs:
